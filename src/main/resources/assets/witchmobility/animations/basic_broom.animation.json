@@ -1,0 +1,72 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.basic_broom.fly_idle": {
+			"loop": true,
+			"animation_length": 2.1,
+			"bones": {
+				"base": {
+					"position": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"1.0": {
+							"vector": [0, 2, 0],
+							"easing": "easeInOutSine"
+						},
+						"2.0": {
+							"vector": [0, 0, 0],
+							"easing": "easeInOutSine"
+						},
+						"2.1": {
+							"vector": [0, 0, 0]
+						}
+					}
+				}
+			}
+		},
+		"animation.basic_broom.forward": {
+			"loop": "hold_on_last_frame",
+			"bones": {
+				"base": {
+					"rotation": {
+						"vector": [-5, 0, 0]
+					}
+				}
+			}
+		},
+		"animation.basic_broom.static": {
+			"loop": true,
+			"bones": {
+				"base": {
+					"rotation": {
+						"vector": [0, 0, 0]
+					},
+					"position": {
+						"vector": [0, 0, 0]
+					}
+				}
+			}
+		},
+		"animation.basic_broom.up": {
+			"loop": true,
+			"bones": {
+				"base": {
+					"rotation": {
+						"vector": [-20, 0, 0]
+					}
+				}
+			}
+		},
+		"animation.basic_broom.down": {
+			"loop": true,
+			"bones": {
+				"base": {
+					"rotation": {
+						"vector": [17.5, 0, 0]
+					}
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " LC",
+    "RCL",
+    "H  "
+  ],
+  "key": {
+    "H": {
+      "item": "minecraft:hay_block"
+    },
+    "C": {
+      "item": "minecraft:obsidian"
+    },
+    "R": {
+      "item": "minecraft:phantom_membrane"
+    },
+    "L": {
+      "item": "minecraft:lapis_lazuli"
+    }
+  },
+  "result": {
+    "item": "witchmobility:blue_bottle_broom_item",
+    "count": 1
+  }
+}

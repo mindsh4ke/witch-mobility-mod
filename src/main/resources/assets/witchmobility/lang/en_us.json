@@ -1,0 +1,17 @@
+{
+  "entity.witchmobility.basic_broom":"Basic Broom",
+  "entity.witchmobility.blue_bottle_broom":"Blue Bottle Broom",
+  "entity.witchmobility.firebolt_broom":"Firebolt Broom",
+  "entity.witchmobility.silver_arrow_broom":"Silver Arrow Broom",
+  "entity.witchmobility.swiftstick_broom":"Swiftstick Broom",
+  "entity.witchmobility.woodshade_broom":"Woodshade Broom",
+
+  "item.witchmobility.basic_broom_item":"Basic Broom",
+  "item.witchmobility.blue_bottle_broom_item":"Blue Bottle Broom",
+  "item.witchmobility.firebolt_broom_item":"Firebolt Broom",
+  "item.witchmobility.silver_arrow_broom_item":"Silver Arrow Broom",
+  "item.witchmobility.swiftstick_broom_item":"Swiftstick Broom",
+  "item.witchmobility.woodshade_broom_item":"Woodshade Broom",
+
+  "tootip.broom": "Press §eCTRL§r to see more details"
+}

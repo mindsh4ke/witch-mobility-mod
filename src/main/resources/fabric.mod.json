@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "witchmobility",
+  "version": "${version}",
+
+  "name": "Witch Mobility Mod",
+  "description": "Become a real witch!",
+  "authors": [
+    "Mindsh4ke"
+  ],
+  "contact": {
+    "homepage": "https://fabricmc.net/",
+    "sources": "https://github.com/mindsh4ke/witch-mobility-mod"
+  },
+
+  "license": "Apache 2.0",
+  "icon": "assets/witchmobility/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.mindshake.witchmobility.Main"
+    ],
+    "client": [
+      "net.mindshake.witchmobility.MainClient"
+    ]
+  },
+  "mixins": [
+    "witchmobility.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.14.6",
+    "fabric": "*",
+    "minecraft": "~1.18.2",
+    "java": ">=17"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}

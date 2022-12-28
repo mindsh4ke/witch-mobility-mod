@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  C",
+    "RC ",
+    "HB "
+  ],
+  "key": {
+    "H": {
+      "item": "minecraft:hay_block"
+    },
+    "C": {
+      "item": "minecraft:iron_ingot"
+    },
+    "R": {
+      "item": "minecraft:phantom_membrane"
+    },
+    "B": {
+      "item": "minecraft:chain"
+    }
+  },
+  "result": {
+    "item": "witchmobility:silver_arrow_broom_item",
+    "count": 1
+  }
+}

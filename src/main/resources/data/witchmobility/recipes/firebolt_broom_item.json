@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  i",
+    "RC ",
+    "H  "
+  ],
+  "key": {
+    "H": {
+      "item": "minecraft:hay_block"
+    },
+    "C": {
+      "item": "minecraft:stick"
+    },
+    "i": {
+      "item": "minecraft:iron_ingot"
+    },
+    "R": {
+      "item": "minecraft:phantom_membrane"
+    }
+  },
+  "result": {
+    "item": "witchmobility:firebolt_broom_item",
+    "count": 1
+  }
+}

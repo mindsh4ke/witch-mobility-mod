@@ -1,0 +1,17 @@
+{
+  "entity.witchmobility.basic_broom":"Escoba Simple",
+  "entity.witchmobility.blue_bottle_broom":"Escoba Blue Bottle",
+  "entity.witchmobility.firebolt_broom":"Escoba Firebolt",
+  "entity.witchmobility.silver_arrow_broom":"Escoba Silver Arrow",
+  "entity.witchmobility.swiftstick_broom":"Escoba Swiftstick",
+  "entity.witchmobility.woodshade_broom":"Escoba Woodshade",
+
+  "item.witchmobility.basic_broom_item":"Escoba Simple",
+  "item.witchmobility.blue_bottle_broom_item":"Escoba Blue Bottle",
+  "item.witchmobility.firebolt_broom_item":"Escoba Firebolt",
+  "item.witchmobility.silver_arrow_broom_item":"Escoba Silver Arrow",
+  "item.witchmobility.swiftstick_broom_item":"Escoba Swiftstick",
+  "item.witchmobility.woodshade_broom_item":"Escoba Woodshade",
+
+  "tootip.broom": "Pulsa §eCTRL§r para más detalles"
+}

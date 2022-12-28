@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "  C",
+    "RC ",
+    "H  "
+  ],
+  "key": {
+    "H": {
+      "item": "minecraft:hay_block"
+    },
+    "C": {
+      "item": "minecraft:stick"
+    },
+    "R": {
+      "item": "minecraft:phantom_membrane"
+    }
+  },
+  "result": {
+    "item": "witchmobility:basic_broom_item",
+    "count": 1
+  }
+}
