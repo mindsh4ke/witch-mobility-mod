@@ -19,6 +19,6 @@ public class BlueBottleBroomEntity extends BroomEntity {
 
     @Override
     public float getRotationSpeed() {
-        return 3f;
+        return 3.5f;
     }
 }

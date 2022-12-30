@@ -14,11 +14,11 @@ public class SwiftstickBroomEntity extends BroomEntity {
 
     @Override
     public float getSpeed() {
-        return 2f;
+        return 1.7f;
     }
 
     @Override
     public float getRotationSpeed() {
-        return 2.5f;
+        return 3f;
     }
 }

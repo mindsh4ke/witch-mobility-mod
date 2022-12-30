@@ -8,6 +8,7 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.vehicle.BoatEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
@@ -41,6 +42,7 @@ public abstract class BroomEntity extends MobEntity implements IAnimatable {
         this.sourceItem = sourceItem;
     }
 
+
     @Override
     @Nullable
     public Entity getPrimaryPassenger() {
@@ -51,6 +53,11 @@ public abstract class BroomEntity extends MobEntity implements IAnimatable {
     protected boolean canAddPassenger(Entity passenger) {
         List<Entity> passengers = getPassengerList();
         return passengers.size() < 1;
+    }
+
+    @Override
+    public float getHealth() {
+        return 0;
     }
 
     @Override
@@ -70,14 +77,6 @@ public abstract class BroomEntity extends MobEntity implements IAnimatable {
     }
 
     @Override
-    public void tickMovement() {
-        super.tickMovement();
-        if (this.world.isClient || !this.isAlive()) {
-            return;
-        }
-    }
-
-    @Override
     public void tick() {
         super.tick();
         if (world.isClient) {
@@ -92,15 +91,13 @@ public abstract class BroomEntity extends MobEntity implements IAnimatable {
             return;
         }
         if (!(this.hasPassengers() && this.canBeControlledByRider())) {
-            this.airStrafingSpeed = 0.02f;
-            super.travel(movementInput);
             return;
         }
         LivingEntity livingEntity = (LivingEntity) this.getPrimaryPassenger();
         this.prevYaw = this.getYaw();
         this.setRotation(this.getYaw(), this.getPitch());
         this.headYaw = this.bodyYaw = this.getYaw();
-        float sideSpeed = livingEntity.sidewaysSpeed * 0.5f * getRotationSpeed();
+        float sideSpeed = livingEntity.sidewaysSpeed * getRotationSpeed();
 
         setYaw(this.getYaw() - sideSpeed);
         float forwardSpeed = livingEntity.forwardSpeed;
@@ -121,8 +118,8 @@ public abstract class BroomEntity extends MobEntity implements IAnimatable {
         this.airStrafingSpeed = this.getMovementSpeed() * 0.1f;
         if (this.isLogicalSideForUpdatingMovement()) {
 
-            this.setMovementSpeed((float) this.getAttributeValue(EntityAttributes.GENERIC_MOVEMENT_SPEED));
-            super.travel(new Vec3d(-forwardSpeed * getSpeed(), verticalSpeed, 0));
+            this.setMovementSpeed((float)getSpeed()/2f);
+            super.travel(new Vec3d(-forwardSpeed, verticalSpeed, 0));
 
         } else if (livingEntity instanceof PlayerEntity) {
             this.setVelocity(Vec3d.ZERO);
@@ -138,7 +135,7 @@ public abstract class BroomEntity extends MobEntity implements IAnimatable {
 
     public static DefaultAttributeContainer.Builder setAttributes() {
         return AnimalEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 10)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 0)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.3f)
                 .add(EntityAttributes.GENERIC_FLYING_SPEED, 0.6f);
     }
@@ -153,7 +150,7 @@ public abstract class BroomEntity extends MobEntity implements IAnimatable {
             return;
         }
         double d = this.getY() + this.getMountedHeightOffset() + passenger.getHeightOffset();
-        positionUpdater.accept(passenger, this.getX() + 0.2f, d, this.getZ());
+        positionUpdater.accept(passenger, this.getX() + 0.1f, d, this.getZ());
     }
 
     @Override
@@ -162,8 +159,53 @@ public abstract class BroomEntity extends MobEntity implements IAnimatable {
     }
 
     @Override
+    public boolean isAffectedBySplashPotions() {
+        return false;
+    }
+
+    @Override
+    public boolean isDead() {
+        return false;
+    }
+
+    @Override
+    public boolean isAlive() {
+        return !this.isRemoved();
+    }
+
+    @Override
     protected int computeFallDamage(float fallDistance, float damageMultiplier) {
         return 0;
+    }
+
+    @Override
+    public boolean handleFallDamage(float fallDistance, float damageMultiplier, DamageSource damageSource) {
+        return false;
+    }
+
+    @Override
+    public boolean canTakeDamage() {
+        return false;
+    }
+
+    @Override
+    public boolean canBreatheInWater() {
+        return true;
+    }
+
+    @Override
+    public boolean canBeRiddenInWater() {
+        return true;
+    }
+
+    @Override
+    public boolean cannotDespawn() {
+        return true;
+    }
+
+    @Override
+    public boolean isFireImmune() {
+        return true;
     }
 
     @Override
@@ -178,7 +220,7 @@ public abstract class BroomEntity extends MobEntity implements IAnimatable {
     }
 
     private void despawn (PlayerEntity player) {
-        this.kill();
+        this.discard();
         if (!player.getInventory().insertStack(new ItemStack(sourceItem))) {
             dropItem(sourceItem.asItem());
         }
