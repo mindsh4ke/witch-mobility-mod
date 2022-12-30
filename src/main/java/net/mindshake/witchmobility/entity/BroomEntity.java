@@ -18,10 +18,12 @@ import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.builder.ILoopType;
 import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import java.util.List;
 import java.util.Objects;
@@ -32,7 +34,7 @@ public abstract class BroomEntity extends MobEntity implements IAnimatable {
 
     private PlayerEntity lastPassenger;
     protected Item sourceItem;
-    protected AnimationFactory factory = new AnimationFactory(this);
+    protected AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
 
     protected BroomEntity(EntityType<? extends MobEntity> entityType, World world, Item sourceItem) {
@@ -40,6 +42,7 @@ public abstract class BroomEntity extends MobEntity implements IAnimatable {
         setNoGravity(true);
         this.sourceItem = sourceItem;
     }
+
 
     @Override
     @Nullable
@@ -54,6 +57,10 @@ public abstract class BroomEntity extends MobEntity implements IAnimatable {
     }
 
     @Override
+    public float getHealth() {
+        return 0;
+    }
+
     public boolean canBeControlledByRider() {
         return this.getPrimaryPassenger() instanceof PlayerEntity;
     }
@@ -66,14 +73,6 @@ public abstract class BroomEntity extends MobEntity implements IAnimatable {
             return isRiding ? ActionResult.CONSUME : ActionResult.FAIL;
         } else {
             return player.getRootVehicle() == getRootVehicle() ? ActionResult.FAIL : ActionResult.SUCCESS;
-        }
-    }
-
-    @Override
-    public void tickMovement() {
-        super.tickMovement();
-        if (this.world.isClient || !this.isAlive()) {
-            return;
         }
     }
 
@@ -92,15 +91,13 @@ public abstract class BroomEntity extends MobEntity implements IAnimatable {
             return;
         }
         if (!(this.hasPassengers() && this.canBeControlledByRider())) {
-            this.airStrafingSpeed = 0.02f;
-            super.travel(movementInput);
             return;
         }
         LivingEntity livingEntity = (LivingEntity) this.getPrimaryPassenger();
         this.prevYaw = this.getYaw();
         this.setRotation(this.getYaw(), this.getPitch());
         this.headYaw = this.bodyYaw = this.getYaw();
-        float sideSpeed = livingEntity.sidewaysSpeed * 0.5f * getRotationSpeed();
+        float sideSpeed = livingEntity.sidewaysSpeed * getRotationSpeed();
 
         setYaw(this.getYaw() - sideSpeed);
         float forwardSpeed = livingEntity.forwardSpeed;
@@ -121,8 +118,8 @@ public abstract class BroomEntity extends MobEntity implements IAnimatable {
         this.airStrafingSpeed = this.getMovementSpeed() * 0.1f;
         if (this.isLogicalSideForUpdatingMovement()) {
 
-            this.setMovementSpeed((float) this.getAttributeValue(EntityAttributes.GENERIC_MOVEMENT_SPEED));
-            super.travel(new Vec3d(-forwardSpeed * getSpeed(), verticalSpeed, 0));
+            this.setMovementSpeed((float)getSpeed()/2f);
+            super.travel(new Vec3d(-forwardSpeed, verticalSpeed, 0));
 
         } else if (livingEntity instanceof PlayerEntity) {
             this.setVelocity(Vec3d.ZERO);
@@ -138,7 +135,7 @@ public abstract class BroomEntity extends MobEntity implements IAnimatable {
 
     public static DefaultAttributeContainer.Builder setAttributes() {
         return AnimalEntity.createMobAttributes()
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 10)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 0)
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.3f)
                 .add(EntityAttributes.GENERIC_FLYING_SPEED, 0.6f);
     }
@@ -153,7 +150,7 @@ public abstract class BroomEntity extends MobEntity implements IAnimatable {
             return;
         }
         double d = this.getY() + this.getMountedHeightOffset() + passenger.getHeightOffset();
-        positionUpdater.accept(passenger, this.getX() + 0.2f, d, this.getZ());
+        positionUpdater.accept(passenger, this.getX() + 0.1f, d, this.getZ());
     }
 
     @Override
@@ -162,8 +159,53 @@ public abstract class BroomEntity extends MobEntity implements IAnimatable {
     }
 
     @Override
+    public boolean isAffectedBySplashPotions() {
+        return false;
+    }
+
+    @Override
+    public boolean isDead() {
+        return false;
+    }
+
+    @Override
+    public boolean isAlive() {
+        return !this.isRemoved();
+    }
+
+    @Override
     protected int computeFallDamage(float fallDistance, float damageMultiplier) {
         return 0;
+    }
+
+    @Override
+    public boolean handleFallDamage(float fallDistance, float damageMultiplier, DamageSource damageSource) {
+        return false;
+    }
+
+    @Override
+    public boolean canTakeDamage() {
+        return false;
+    }
+
+    @Override
+    public boolean canBreatheInWater() {
+        return true;
+    }
+
+    @Override
+    public boolean canBeRiddenInWater() {
+        return true;
+    }
+
+    @Override
+    public boolean cannotDespawn() {
+        return true;
+    }
+
+    @Override
+    public boolean isFireImmune() {
+        return true;
     }
 
     @Override
@@ -178,7 +220,7 @@ public abstract class BroomEntity extends MobEntity implements IAnimatable {
     }
 
     private void despawn (PlayerEntity player) {
-        this.kill();
+        this.discard();
         if (!player.getInventory().insertStack(new ItemStack(sourceItem))) {
             dropItem(sourceItem.asItem());
         }
@@ -186,15 +228,15 @@ public abstract class BroomEntity extends MobEntity implements IAnimatable {
 
     private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
         if (getFirstPassenger() == null) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.basic_broom.fly_idle", true));
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.basic_broom.fly_idle", ILoopType.EDefaultLoopTypes.LOOP));
         } else if (upIsPressed) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.basic_broom.up", true));
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.basic_broom.up", ILoopType.EDefaultLoopTypes.LOOP));
         }  else if (downIsPressed) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.basic_broom.down", true));
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.basic_broom.down", ILoopType.EDefaultLoopTypes.LOOP));
         } else if (((LivingEntity) Objects.requireNonNull(this.getPrimaryPassenger())).forwardSpeed > 0.1f) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.basic_broom.forward", true));
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.basic_broom.forward", ILoopType.EDefaultLoopTypes.LOOP));
         } else {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.basic_broom.static", true));
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.basic_broom.static", ILoopType.EDefaultLoopTypes.LOOP));
         }
         return PlayState.CONTINUE;
     }

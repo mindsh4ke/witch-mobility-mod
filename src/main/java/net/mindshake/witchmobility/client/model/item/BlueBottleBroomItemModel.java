@@ -8,17 +8,17 @@ import software.bernie.geckolib3.model.AnimatedGeoModel;
 
 public class BlueBottleBroomItemModel extends AnimatedGeoModel<BlueBottleBroomItem> {
     @Override
-    public Identifier getModelLocation(BlueBottleBroomItem object) {
+    public Identifier getModelResource(BlueBottleBroomItem object) {
         return EntityResources.BLUE_BOTTLE_BROOM_MODEL;
     }
 
     @Override
-    public Identifier getTextureLocation(BlueBottleBroomItem object) {
+    public Identifier getTextureResource(BlueBottleBroomItem object) {
         return EntityResources.BLUE_BOTTLE_BROOM_TEXTURE;
     }
 
     @Override
-    public Identifier getAnimationFileLocation(BlueBottleBroomItem animatable) {
+    public Identifier getAnimationResource(BlueBottleBroomItem animatable) {
         return EntityResources.BASIC_ANIMATIONS;
     }
 }

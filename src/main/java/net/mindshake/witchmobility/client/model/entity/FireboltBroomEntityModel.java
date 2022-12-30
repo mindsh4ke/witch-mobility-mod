@@ -8,17 +8,17 @@ import software.bernie.geckolib3.model.AnimatedGeoModel;
 
 public class FireboltBroomEntityModel extends AnimatedGeoModel<FireboltBroomEntity> {
     @Override
-    public Identifier getModelLocation(FireboltBroomEntity object) {
+    public Identifier getModelResource(FireboltBroomEntity object) {
         return EntityResources.BASIC_BROOM_MODEL;
     }
 
     @Override
-    public Identifier getTextureLocation(FireboltBroomEntity object) {
+    public Identifier getTextureResource(FireboltBroomEntity object) {
         return EntityResources.FIREBOLT_BROOM_TEXTURE;
     }
 
     @Override
-    public Identifier getAnimationFileLocation(FireboltBroomEntity animatable) {
+    public Identifier getAnimationResource(FireboltBroomEntity animatable) {
         return EntityResources.BASIC_ANIMATIONS;
     }
 }

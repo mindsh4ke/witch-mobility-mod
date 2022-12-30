@@ -18,6 +18,6 @@ public class BasicBroomEntity extends BroomEntity {
 
     @Override
     public float getRotationSpeed() {
-        return 2f;
+        return 2.25f;
     }
 }

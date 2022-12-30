@@ -8,17 +8,17 @@ import software.bernie.geckolib3.model.AnimatedGeoModel;
 
 public class SilverArrowBroomEntityModel extends AnimatedGeoModel<SilverArrowBroomEntity> {
     @Override
-    public Identifier getModelLocation(SilverArrowBroomEntity object) {
+    public Identifier getModelResource(SilverArrowBroomEntity object) {
         return EntityResources.SILVER_ARROW_BROOM_MODEL;
     }
 
     @Override
-    public Identifier getTextureLocation(SilverArrowBroomEntity object) {
+    public Identifier getTextureResource(SilverArrowBroomEntity object) {
         return EntityResources.SILVER_ARROW_BROOM_TEXTURE;
     }
 
     @Override
-    public Identifier getAnimationFileLocation(SilverArrowBroomEntity animatable) {
+    public Identifier getAnimationResource(SilverArrowBroomEntity animatable) {
         return EntityResources.BASIC_ANIMATIONS;
     }
 }

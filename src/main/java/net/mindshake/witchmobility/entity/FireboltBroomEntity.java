@@ -14,11 +14,11 @@ public class FireboltBroomEntity extends BroomEntity {
 
     @Override
     public float getSpeed() {
-        return 2.5f;
+        return 1.75f;
     }
 
     @Override
     public float getRotationSpeed() {
-        return 3f;
+        return 3.25f;
     }
 }

@@ -8,17 +8,17 @@ import software.bernie.geckolib3.model.AnimatedGeoModel;
 
 public class WoodShadeBroomItemModel extends AnimatedGeoModel<WoodShadeBroomItem> {
     @Override
-    public Identifier getModelLocation(WoodShadeBroomItem object) {
+    public Identifier getModelResource(WoodShadeBroomItem object) {
         return EntityResources.WOODSHADE_BROOM_MODEL;
     }
 
     @Override
-    public Identifier getTextureLocation(WoodShadeBroomItem object) {
+    public Identifier getTextureResource(WoodShadeBroomItem object) {
         return EntityResources.WOODSHADE_BROOM_TEXTURE;
     }
 
     @Override
-    public Identifier getAnimationFileLocation(WoodShadeBroomItem animatable) {
+    public Identifier getAnimationResource(WoodShadeBroomItem animatable) {
         return EntityResources.BASIC_ANIMATIONS;
     }
 }

@@ -13,7 +13,6 @@ import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.text.LiteralText;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.Quaternion;
 import net.minecraft.util.math.Vec3f;
@@ -56,11 +55,11 @@ public class ItemPreviewScreen extends Screen {
     }
 
     public Text getMovementSpeedText () {
-        return new LiteralText("Movement speed: " + ((BroomEntity)entity).getSpeed());
+        return Text.literal("Movement speed: " + ((BroomEntity)entity).getSpeed());
     }
 
     public Text getRotationSpeedText () {
-        return new LiteralText("Rotation speed: " + ((BroomEntity)entity).getRotationSpeed());
+        return Text.literal("Rotation speed: " + ((BroomEntity)entity).getRotationSpeed());
     }
 
     public static float lerp(float a, float b, float interpolation) {

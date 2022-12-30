@@ -9,17 +9,17 @@ import software.bernie.geckolib3.model.AnimatedGeoModel;
 
 public class BasicBroomEntityModel extends AnimatedGeoModel<BasicBroomEntity> {
     @Override
-    public Identifier getModelLocation(BasicBroomEntity object) {
+    public Identifier getModelResource(BasicBroomEntity object) {
         return EntityResources.BASIC_BROOM_MODEL;
     }
 
     @Override
-    public Identifier getTextureLocation(BasicBroomEntity object) {
+    public Identifier getTextureResource(BasicBroomEntity object) {
         return EntityResources.BASIC_BROOM_DEFAULT_TEXTURE;
     }
 
     @Override
-    public Identifier getAnimationFileLocation(BasicBroomEntity animatable) {
+    public Identifier getAnimationResource(BasicBroomEntity animatable) {
         return EntityResources.BASIC_ANIMATIONS;
     }
 }

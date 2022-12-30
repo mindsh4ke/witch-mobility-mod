@@ -8,17 +8,17 @@ import software.bernie.geckolib3.model.AnimatedGeoModel;
 
 public class SwiftstickBroomEntityModel extends AnimatedGeoModel<SwiftstickBroomEntity> {
     @Override
-    public Identifier getModelLocation(SwiftstickBroomEntity object) {
+    public Identifier getModelResource(SwiftstickBroomEntity object) {
         return EntityResources.SWIFTSTICK_BROOM_MODEL;
     }
 
     @Override
-    public Identifier getTextureLocation(SwiftstickBroomEntity object) {
+    public Identifier getTextureResource(SwiftstickBroomEntity object) {
         return EntityResources.SWIFTSTICK_BROOM_TEXTURE;
     }
 
     @Override
-    public Identifier getAnimationFileLocation(SwiftstickBroomEntity animatable) {
+    public Identifier getAnimationResource(SwiftstickBroomEntity animatable) {
         return EntityResources.BASIC_ANIMATIONS;
     }
 }

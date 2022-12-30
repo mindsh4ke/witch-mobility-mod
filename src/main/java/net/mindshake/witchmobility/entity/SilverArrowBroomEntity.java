@@ -13,11 +13,11 @@ public class SilverArrowBroomEntity extends BroomEntity {
 
     @Override
     public float getSpeed() {
-        return 4.5f;
+        return 3f;
     }
 
     @Override
     public float getRotationSpeed() {
-        return 3f;
+        return 4.5f;
     }
 }

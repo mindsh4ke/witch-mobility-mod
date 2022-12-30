@@ -14,11 +14,11 @@ public class WoodShadeBroomEntity extends BroomEntity {
 
     @Override
     public float getSpeed() {
-        return 1.25f;
+        return 1.5f;
     }
 
     @Override
     public float getRotationSpeed() {
-        return 3f;
+        return 3.5f;
     }
 }
