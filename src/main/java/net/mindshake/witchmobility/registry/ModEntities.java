@@ -37,7 +37,7 @@ public class ModEntities {
         return Registry.register(
                 Registry.ENTITY_TYPE,
                 new Identifier(Main.MOD_ID, identifier),
-                FabricEntityTypeBuilder.create(SpawnGroup.MISC, factory).dimensions(EntityDimensions.fixed(0.5f,0.5f)).build()
+                FabricEntityTypeBuilder.create(SpawnGroup.MISC, factory).dimensions(EntityDimensions.fixed(1f,0.5f)).build()
         );
 
     }

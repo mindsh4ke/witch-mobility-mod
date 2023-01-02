@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CCC",
+    "RA ",
+    "CCC"
+  ],
+  "key": {
+    "A": {
+      "item": "witchmobility:apprentice_witch_hat"
+    },
+    "C": {
+      "item": "minecraft:amethyst_shard"
+    },
+    "R": {
+      "item": "minecraft:feather"
+    }
+  },
+  "result": {
+    "item": "witchmobility:amethyst_witch_hat",
+    "count": 1
+  }
+}

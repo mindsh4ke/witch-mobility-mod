@@ -1,0 +1,23 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "CCC",
+    "RA ",
+    "CCC"
+  ],
+  "key": {
+    "A": {
+      "item": "witchmobility:apprentice_witch_hat"
+    },
+    "C": {
+      "item": "minecraft:diamond"
+    },
+    "R": {
+      "item": "minecraft:gold_ingot"
+    }
+  },
+  "result": {
+    "item": "witchmobility:diamond_witch_hat",
+    "count": 1
+  }
+}
