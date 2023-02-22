@@ -27,5 +27,6 @@ public class Main implements ModInitializer {
 		GeckoLib.initialize();
 
 		LOGGER.info("Welcome to Boiling Isles!");
+		LOGGER.info("Hola Alba");
 	}
 }
