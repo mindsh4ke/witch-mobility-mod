@@ -31,9 +31,9 @@ import java.util.Objects;
 
 public abstract class BroomEntity extends MobEntity implements IAnimatable {
 
-    private boolean upIsPressed, downIsPressed;
+    protected boolean upIsPressed, downIsPressed;
 
-    private PlayerEntity lastPassenger;
+    protected PlayerEntity lastPassenger;
     protected Item sourceItem;
     protected AnimationFactory factory = new AnimationFactory(this);
 
@@ -248,7 +248,7 @@ public abstract class BroomEntity extends MobEntity implements IAnimatable {
         }
     }
 
-    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+    protected  <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
         if (getFirstPassenger() == null) {
             event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.basic_broom.fly_idle", true));
         } else if (upIsPressed) {

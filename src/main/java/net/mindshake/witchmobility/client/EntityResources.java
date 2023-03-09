@@ -21,6 +21,18 @@ public class EntityResources {
     public static final Identifier WOODSHADE_BROOM_MODEL = new Identifier(Main.MOD_ID, "geo/wood_shade_broom.geo.json");
     public static final Identifier WOODSHADE_BROOM_TEXTURE = new Identifier(Main.MOD_ID, "textures/entity/wood_shade_broom.png");
 
+    public static final Identifier GOLDENWOOD_BROOM_MODEL = new Identifier(Main.MOD_ID, "geo/basic_broom.geo.json");
+    public static final Identifier GOLDENWOOD_BROOM_TEXTURE = new Identifier(Main.MOD_ID, "textures/entity/goldenwood_broom.png");
+
+    public static final Identifier SNOWAIR_BROOM_MODEL = new Identifier(Main.MOD_ID, "geo/basic_broom.geo.json");
+    public static final Identifier SNOWAIR_BROOM_TEXTURE = new Identifier(Main.MOD_ID, "textures/entity/snowair_broom.png");
+
+    public static final Identifier LEAFSHADE_BROOM_MODEL = new Identifier(Main.MOD_ID, "geo/leafshade_broom.geo.json");
+    public static final Identifier LEAFSHADE_BROOM_TEXTURE = new Identifier(Main.MOD_ID, "textures/entity/leafshade_broom.png");
+
+    public static final Identifier WINGS_BROOM_MOEDL = new Identifier(Main.MOD_ID, "geo/wings_broom.geo.json");
+    public static final Identifier WINGS_BROOM_TEXTURE = new Identifier(Main.MOD_ID, "textures/entity/wings_broom.png");
+
     public static final Identifier BASIC_ANIMATIONS = new Identifier(Main.MOD_ID, "animations/basic_broom.animation.json");
 
 

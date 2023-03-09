@@ -14,6 +14,15 @@
   "item.witchmobility.woodshade_broom_item":"Escoba Woodshade",
   "item.witchmobility.witch_suit":"Traje de Bruja",
 
+  "entity.witchmobility.goldenwood_broom":"Escoba Goldenwood",
+  "entity.witchmobility.leafshade_broom":"Escoba Leafshade",
+  "entity.witchmobility.snowair_broom":"Escoba Snowair",
+  "entity.witchmobility.wings_broom":"Escoba Alada",
+  "item.witchmobility.goldenwood_broom_item":"Escoba Goldenwood",
+  "item.witchmobility.leafshade_broom_item":"Escoba Leafshade",
+  "item.witchmobility.snowair_broom_item":"EscobaSnowair",
+  "item.witchmobility.wings_broom_item":"Escoba Alada",
+
   "tootip.broom": "Pulsa §eCTRL§r para más detalles",
   "item.witchmobility.apprentice_witch_hat": "Sombrero de Aprendiz",
   "item.witchmobility.diamond_witch_hat": "Sombrero de Bruja de Diamante",

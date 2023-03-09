@@ -5,6 +5,10 @@
   "entity.witchmobility.silver_arrow_broom":"Silver Arrow Broom",
   "entity.witchmobility.swiftstick_broom":"Swiftstick Broom",
   "entity.witchmobility.woodshade_broom":"Woodshade Broom",
+  "entity.witchmobility.goldenwood_broom":"Goldenwood Broom",
+  "entity.witchmobility.leafshade_broom":"Leafshade Broom",
+  "entity.witchmobility.snowair_broom":"Snowair Broom",
+  "entity.witchmobility.wings_broom":"Wings Broom",
 
   "item.witchmobility.basic_broom_item":"Basic Broom",
   "item.witchmobility.blue_bottle_broom_item":"Blue Bottle Broom",
@@ -12,6 +16,10 @@
   "item.witchmobility.silver_arrow_broom_item":"Silver Arrow Broom",
   "item.witchmobility.swiftstick_broom_item":"Swiftstick Broom",
   "item.witchmobility.woodshade_broom_item":"Woodshade Broom",
+  "item.witchmobility.goldenwood_broom_item":"Goldenwood Broom",
+  "item.witchmobility.leafshade_broom_item":"Leafshade Broom",
+  "item.witchmobility.snowair_broom_item":"Snowair Broom",
+  "item.witchmobility.wings_broom_item":"Wings Broom",
 
   "item.witchmobility.apprentice_witch_hat":"Apprentice Witch Hat",
   "item.witchmobility.diamond_witch_hat":"Diamond Witch Hat",

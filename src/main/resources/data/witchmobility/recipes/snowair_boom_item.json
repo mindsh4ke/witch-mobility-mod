@@ -16,11 +16,11 @@
       "item": "minecraft:phantom_membrane"
     },
     "a": {
-      "item": "minecraft:iron_nugget"
+      "item": "minecraft:snowball"
     }
   },
   "result": {
-    "item": "witchmobility:swiftstick_broom_item",
+    "item": "witchmobility:snowair_broom_item",
     "count": 1
   }
 }

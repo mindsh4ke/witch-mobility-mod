@@ -37,6 +37,18 @@ public class MainClient implements ClientModInitializer {
         EntityRendererRegistry.register(ModEntities.WOODSHADE_BROOM, WoodShadeBroomEntityRenderer::new);
         GeoItemRenderer.registerItemRenderer(ModItems.WOODSHADE_BROOM, new WoodShadeBroomItemRenderer());
 
+        EntityRendererRegistry.register(ModEntities.GOLDENWOOD_BROOM, GoldenwoodBroomEntityRenderer::new);
+        GeoItemRenderer.registerItemRenderer(ModItems.GOLDENWOOD_BROOM, new GoldenwoodBroomItemRenderer());
+
+        EntityRendererRegistry.register(ModEntities.SNOWAIR_BROOM, SnowairBroomEntityRenderer::new);
+        GeoItemRenderer.registerItemRenderer(ModItems.SNOWAIR_BROOM, new SnowairBroomItemRenderer());
+
+        EntityRendererRegistry.register(ModEntities.LEAFSHADE_BROOM, LeafshadeBroomEntityRenderer::new);
+        GeoItemRenderer.registerItemRenderer(ModItems.LEAFSHADE_BROOM, new LeafshadeBroomItemRenderer());
+
+        EntityRendererRegistry.register(ModEntities.WINGS_BROOM, WingsBroomEntityRenderer::new);
+        GeoItemRenderer.registerItemRenderer(ModItems.WINGS_BROOM, new WingsBroomItemRenderer());
+
 
         GeoArmorRenderer.registerArmorRenderer(new ApprenticeWitchHatRenderer(), ModItems.APPRENTICE_WITCH_HAT, ModItems.AMETHYST_WITCH_HAT, ModItems.DIAMOND_WITCH_HAT, ModItems.GOLD_WITCH_HAT);
         GeoArmorRenderer.registerArmorRenderer(new WitchSuitRenderer(), ModItems.WITCH_SUIT);

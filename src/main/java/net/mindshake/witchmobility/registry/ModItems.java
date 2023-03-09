@@ -21,6 +21,10 @@ public class ModItems {
     public static final Item FIREBOLT_BROOM = new FireboltBroomItem(ModEntities.FIREBOLT_BROOM, new Item.Settings().group(ModItemGroup.WITCH).maxCount(1));
     public static final Item SWIFTSTICK_BROOM = new SwiftstickBroomItem(ModEntities.SWIFTSTICK_BROOM, new Item.Settings().group(ModItemGroup.WITCH).maxCount(1));
     public static final Item WOODSHADE_BROOM = new WoodShadeBroomItem(ModEntities.WOODSHADE_BROOM, new Item.Settings().group(ModItemGroup.WITCH).maxCount(1));
+    public static final Item GOLDENWOOD_BROOM = new GoldenwoodBroomItem(ModEntities.GOLDENWOOD_BROOM, new Item.Settings().group(ModItemGroup.WITCH).maxCount(1));
+    public static final Item SNOWAIR_BROOM = new SnowairBroomItem(ModEntities.SNOWAIR_BROOM, new Item.Settings().group(ModItemGroup.WITCH).maxCount(1));
+    public static final Item LEAFSHADE_BROOM = new LeafshadeBroomItem(ModEntities.LEAFSHADE_BROOM, new Item.Settings().group(ModItemGroup.WITCH).maxCount(1));
+    public static final Item WINGS_BROOM = new WingsBroomItem(ModEntities.WINGS_BROOM, new Item.Settings().group(ModItemGroup.WITCH).maxCount(1));
 
 
     public static final Item APPRENTICE_WITCH_HAT = new WitchHat(0, 0.5f, 0.25f, ArmorMaterials.LEATHER, EquipmentSlot.HEAD, new Item.Settings().group(ModItemGroup.WITCH).maxCount(1));
@@ -42,6 +46,10 @@ public class ModItems {
         registerItem("diamond_witch_hat", DIAMOND_WITCH_HAT);
         registerItem("gold_witch_hat", GOLD_WITCH_HAT);
         registerItem("witch_suit", WITCH_SUIT);
+        registerItem("goldenwood_broom_item", GOLDENWOOD_BROOM);
+        registerItem("snowair_broom_item", SNOWAIR_BROOM);
+        registerItem("leafshade_broom_item", LEAFSHADE_BROOM);
+        registerItem("wings_broom_item", WINGS_BROOM);
     }
 
     private static void registerItem (String itemName, Item item) {
