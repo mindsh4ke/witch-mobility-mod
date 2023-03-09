@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " aC",
+    "RCa",
+    "H  "
+  ],
+  "key": {
+    "H": {
+      "item": "minecraft:hay_block"
+    },
+    "C": {
+      "item": "minecraft:stick"
+    },
+    "R": {
+      "item": "minecraft:phantom_membrane"
+    },
+    "a": {
+      "item": "minecraft:gold_ingot"
+    }
+  },
+  "result": {
+    "item": "witchmobility:goldenwood_broom_item",
+    "count": 1
+  }
+}

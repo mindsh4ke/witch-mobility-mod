@@ -1,5 +1,6 @@
 package net.mindshake.witchmobility.entity;
 
+import net.mindshake.witchmobility.item.armor.WitchHat;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
@@ -35,6 +36,8 @@ public abstract class BroomEntity extends MobEntity implements IAnimatable {
     private PlayerEntity lastPassenger;
     protected Item sourceItem;
     protected AnimationFactory factory = GeckoLibUtil.createFactory(this);
+
+    private float bonusSpeed = 0f, bonusAgility = 0f;
 
 
     protected BroomEntity(EntityType<? extends MobEntity> entityType, World world, Item sourceItem) {
@@ -93,11 +96,12 @@ public abstract class BroomEntity extends MobEntity implements IAnimatable {
         if (!(this.hasPassengers() && this.canBeControlledByRider())) {
             return;
         }
+        checkBonusValues();
         LivingEntity livingEntity = (LivingEntity) this.getPrimaryPassenger();
         this.prevYaw = this.getYaw();
         this.setRotation(this.getYaw(), this.getPitch());
         this.headYaw = this.bodyYaw = this.getYaw();
-        float sideSpeed = livingEntity.sidewaysSpeed * getRotationSpeed();
+        float sideSpeed = livingEntity.sidewaysSpeed * getRotationSpeed() * (1+bonusAgility);
 
         setYaw(this.getYaw() - sideSpeed);
         float forwardSpeed = livingEntity.forwardSpeed;
@@ -118,7 +122,7 @@ public abstract class BroomEntity extends MobEntity implements IAnimatable {
         this.airStrafingSpeed = this.getMovementSpeed() * 0.1f;
         if (this.isLogicalSideForUpdatingMovement()) {
 
-            this.setMovementSpeed((float)getSpeed()/2f);
+            this.setMovementSpeed((float)getSpeed()/2f + (bonusSpeed/2f));
             super.travel(new Vec3d(-forwardSpeed, verticalSpeed, 0));
 
         } else if (livingEntity instanceof PlayerEntity) {
@@ -126,6 +130,23 @@ public abstract class BroomEntity extends MobEntity implements IAnimatable {
         }
         this.updateLimbs(this, false);
         this.tryCheckBlockCollision();
+    }
+
+    private void checkBonusValues () {
+        PlayerEntity player = (PlayerEntity) this.getPrimaryPassenger();
+        if (player.hasStackEquipped(EquipmentSlot.HEAD)) {
+            Item headItem = player.getEquippedStack(EquipmentSlot.HEAD).getItem();
+            if (headItem instanceof WitchHat) {
+                bonusSpeed = ((WitchHat)headItem).getBroomSpeedBonus();
+                bonusAgility = ((WitchHat)headItem).getBroomAgilityBonus();
+            } else {
+                bonusSpeed = 0;
+                bonusAgility = 0;
+            }
+        } else {
+            bonusSpeed = 0;
+            bonusAgility = 0;
+        }
     }
 
     @Override

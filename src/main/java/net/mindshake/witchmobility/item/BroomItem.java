@@ -1,5 +1,7 @@
 package net.mindshake.witchmobility.item;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.mindshake.witchmobility.screen.ItemPreviewScreen;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -17,7 +19,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemUsageContext;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
@@ -94,6 +95,7 @@ public class BroomItem extends Item implements IAnimatable {
         return this.factory;
     }
 
+    @Environment(EnvType.CLIENT)
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
         super.appendTooltip(stack, world, tooltip, context);
