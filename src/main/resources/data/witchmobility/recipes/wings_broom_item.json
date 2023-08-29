@@ -10,17 +10,17 @@
       "item": "minecraft:hay_block"
     },
     "C": {
-      "item": "minecraft:iron_ingot"
+      "item": "minecraft:stick"
     },
     "R": {
       "item": "minecraft:phantom_membrane"
     },
     "a": {
-      "item": "minecraft:iron_nugget"
+      "item": "minecraft:feather"
     }
   },
   "result": {
-    "item": "witchmobility:swiftstick_broom_item",
+    "item": "witchmobility:wings_broom_item",
     "count": 1
   }
 }

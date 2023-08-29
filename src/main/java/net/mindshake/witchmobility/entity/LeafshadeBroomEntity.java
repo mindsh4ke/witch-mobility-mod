@@ -1,8 +1,11 @@
 package net.mindshake.witchmobility.entity;
 
+import net.mindshake.witchmobility.config.ModConfigs;
 import net.mindshake.witchmobility.registry.ModItems;
+import net.mindshake.witchmobility.util.BroomFX;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.world.World;
 
 public class LeafshadeBroomEntity extends BroomEntity {
@@ -14,11 +17,16 @@ public class LeafshadeBroomEntity extends BroomEntity {
 
     @Override
     public float getSpeed() {
-        return 1.6f;
+        return (float) ModConfigs.LEAFSHADE_MOV;
     }
 
     @Override
     public float getRotationSpeed() {
-        return 3.1f;
+        return (float)ModConfigs.LEAFSHADE_ROT;
+    }
+
+    @Override
+    public void doEffect() {
+        BroomFX.spawnParticle(this, this.random, this.world, ParticleTypes.FALLING_SPORE_BLOSSOM);
     }
 }

@@ -1,5 +1,6 @@
 package net.mindshake.witchmobility.entity;
 
+import net.mindshake.witchmobility.config.ModConfigs;
 import net.mindshake.witchmobility.registry.ModItems;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.MobEntity;
@@ -13,11 +14,11 @@ public class SilverArrowBroomEntity extends BroomEntity {
 
     @Override
     public float getSpeed() {
-        return 3f;
+        return (float) ModConfigs.SILVER_ARROW_MOV;
     }
 
     @Override
     public float getRotationSpeed() {
-        return 4.5f;
+        return (float)ModConfigs.SILVER_ARROW_ROT;
     }
 }

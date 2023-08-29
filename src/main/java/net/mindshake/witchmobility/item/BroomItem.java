@@ -74,6 +74,7 @@ public class BroomItem extends Item implements IAnimatable {
             itemStack.decrement(1);
             world.emitGameEvent((Entity)context.getPlayer(), GameEvent.ENTITY_PLACE, blockPos);
         }
+
         return ActionResult.CONSUME;
     }
 

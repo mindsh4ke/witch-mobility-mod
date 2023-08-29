@@ -1,5 +1,6 @@
 package net.mindshake.witchmobility.entity;
 
+import net.mindshake.witchmobility.config.ModConfigs;
 import net.mindshake.witchmobility.registry.ModItems;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.MobEntity;
@@ -14,11 +15,11 @@ public class GoldenwoodBroomEntity extends BroomEntity {
 
     @Override
     public float getSpeed() {
-        return 1.45f;
+        return (float) ModConfigs.GOLDENWOOD_MOV;
     }
 
     @Override
     public float getRotationSpeed() {
-        return 3f;
+        return (float)ModConfigs.GOLDENWOOD_ROT;
     }
 }

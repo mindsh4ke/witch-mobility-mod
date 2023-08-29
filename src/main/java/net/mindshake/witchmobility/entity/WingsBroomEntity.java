@@ -1,9 +1,12 @@
 package net.mindshake.witchmobility.entity;
 
+import net.mindshake.witchmobility.config.ModConfigs;
 import net.mindshake.witchmobility.registry.ModItems;
+import net.mindshake.witchmobility.util.BroomFX;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.world.World;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
@@ -21,14 +24,18 @@ public class WingsBroomEntity extends BroomEntity {
 
     @Override
     public float getSpeed() {
-        return 1.85f;
+        return (float) ModConfigs.WINGS_MOV;
     }
 
     @Override
     public float getRotationSpeed() {
-        return 3f;
+        return (float)ModConfigs.WINGS_ROT;
     }
 
+    @Override
+    public void doEffect() {
+        BroomFX.spawnParticle(this, this.random, this.world, ParticleTypes.END_ROD);
+    }
 
     /*@Override
     protected  <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {

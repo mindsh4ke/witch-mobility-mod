@@ -4,7 +4,9 @@ import net.mindshake.witchmobility.Main;
 import net.mindshake.witchmobility.item.*;
 import net.mindshake.witchmobility.item.armor.WitchHat;
 import net.mindshake.witchmobility.item.armor.WitchSuit;
+import net.minecraft.client.render.entity.ItemFrameEntityRenderer;
 import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.decoration.ItemFrameEntity;
 import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.ArmorMaterials;
 import net.minecraft.item.Item;
@@ -25,6 +27,7 @@ public class ModItems {
     public static final Item SNOWAIR_BROOM = new SnowairBroomItem(ModEntities.SNOWAIR_BROOM, new Item.Settings().group(ModItemGroup.WITCH).maxCount(1));
     public static final Item LEAFSHADE_BROOM = new LeafshadeBroomItem(ModEntities.LEAFSHADE_BROOM, new Item.Settings().group(ModItemGroup.WITCH).maxCount(1));
     public static final Item WINGS_BROOM = new WingsBroomItem(ModEntities.WINGS_BROOM, new Item.Settings().group(ModItemGroup.WITCH).maxCount(1));
+    public static final Item CUSTOM_BROOM = new CustomBroomItem(ModEntities.WINGS_BROOM, new Item.Settings().group(null).maxCount(1));
 
 
     public static final Item APPRENTICE_WITCH_HAT = new WitchHat(0, 0.5f, 0.25f, ArmorMaterials.LEATHER, EquipmentSlot.HEAD, new Item.Settings().group(ModItemGroup.WITCH).maxCount(1));
@@ -32,7 +35,7 @@ public class ModItems {
     public static final Item DIAMOND_WITCH_HAT = new WitchHat(2, 1.25f, 0.75f, ArmorMaterials.DIAMOND, EquipmentSlot.HEAD, new Item.Settings().group(ModItemGroup.WITCH).maxCount(1));
     public static final Item GOLD_WITCH_HAT = new WitchHat(3, 0.85f, 1.25f, ArmorMaterials.GOLD, EquipmentSlot.HEAD, new Item.Settings().group(ModItemGroup.WITCH).maxCount(1));
 
-    public static final Item WITCH_SUIT = new WitchSuit(ArmorMaterials.DIAMOND, EquipmentSlot.CHEST, new Item.Settings().group(ModItemGroup.WITCH).maxCount(1));
+    public static final Item WITCH_SUIT = new WitchSuit(ArmorMaterials.CHAIN, EquipmentSlot.CHEST, new Item.Settings().group(ModItemGroup.WITCH).maxCount(1));
 
     public static void registerItems () {
         registerItem("basic_broom_item", BASIC_BROOM);
@@ -50,6 +53,7 @@ public class ModItems {
         registerItem("snowair_broom_item", SNOWAIR_BROOM);
         registerItem("leafshade_broom_item", LEAFSHADE_BROOM);
         registerItem("wings_broom_item", WINGS_BROOM);
+        registerItem("custom_broom_item", CUSTOM_BROOM);
     }
 
     private static void registerItem (String itemName, Item item) {

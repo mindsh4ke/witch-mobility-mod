@@ -1,19 +1,25 @@
 package net.mindshake.witchmobility.entity;
 
 import net.mindshake.witchmobility.item.armor.WitchHat;
+import net.mindshake.witchmobility.util.BroomFX;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.passive.AllayEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.LocalDifficulty;
+import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -33,6 +39,8 @@ public abstract class BroomEntity extends MobEntity implements IAnimatable {
 
     private boolean upIsPressed, downIsPressed;
 
+    private int frame = 0;
+
     private PlayerEntity lastPassenger;
     protected Item sourceItem;
     protected AnimationFactory factory = GeckoLibUtil.createFactory(this);
@@ -45,7 +53,6 @@ public abstract class BroomEntity extends MobEntity implements IAnimatable {
         setNoGravity(true);
         this.sourceItem = sourceItem;
     }
-
 
     @Override
     @Nullable
@@ -85,6 +92,12 @@ public abstract class BroomEntity extends MobEntity implements IAnimatable {
         if (world.isClient) {
                 upIsPressed = MinecraftClient.getInstance().options.jumpKey.isPressed();
                 downIsPressed = MinecraftClient.getInstance().options.sprintKey.isPressed();
+        }
+        frame++;
+
+        if (frame >= 8) {
+            doEffect();
+            frame = 0;
         }
     }
 
@@ -232,6 +245,9 @@ public abstract class BroomEntity extends MobEntity implements IAnimatable {
     @Override
     public boolean damage(DamageSource source, float amount) {
         if (source.getSource() instanceof PlayerEntity player) {
+            for (int i = 0; i < 6; i++) {
+                BroomFX.spawnParticle(this, this.random, this.world, ParticleTypes.CAMPFIRE_COSY_SMOKE);
+            }
             despawn(player);
             return true;
         } else {
@@ -276,4 +292,5 @@ public abstract class BroomEntity extends MobEntity implements IAnimatable {
 
     public abstract float getSpeed ();
     public abstract float getRotationSpeed();
+    public void doEffect(){}
 }

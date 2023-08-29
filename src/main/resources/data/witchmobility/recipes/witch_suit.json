@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "AAA",
+    "RCR",
+    "B B"
+  ],
+  "key": {
+    "A": {
+      "item": "minecraft:leather"
+    },
+    "C": {
+      "item": "minecraft:phantom_membrane"
+    },
+    "R": {
+      "item": "minecraft:string"
+    },
+    "B": {
+      "item": "minecraft:gold_ingot"
+    }
+  },
+  "result": {
+    "item": "witchmobility:witch_suit",
+    "count": 1
+  }
+}

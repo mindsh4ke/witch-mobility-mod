@@ -1,16 +1,19 @@
 package net.mindshake.witchmobility;
 
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.blockrenderlayer.v1.BlockRenderLayerMap;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.client.screenhandler.v1.ScreenRegistry;
 import net.mindshake.witchmobility.client.renderer.armor.ApprenticeWitchHatRenderer;
 import net.mindshake.witchmobility.client.renderer.armor.WitchSuitRenderer;
 import net.mindshake.witchmobility.client.renderer.entity.*;
 import net.mindshake.witchmobility.client.renderer.item.*;
+import net.mindshake.witchmobility.registry.ModBlocks;
 import net.mindshake.witchmobility.registry.ModEntities;
 import net.mindshake.witchmobility.registry.ModItems;
 import net.mindshake.witchmobility.screen.ModScreenHandlers;
 import net.mindshake.witchmobility.screen.glyphtable.GlyphTableScreen;
+import net.minecraft.client.render.RenderLayer;
 import software.bernie.geckolib3.renderers.geo.GeoArmorRenderer;
 import software.bernie.geckolib3.renderers.geo.GeoItemRenderer;
 
@@ -49,8 +52,12 @@ public class MainClient implements ClientModInitializer {
         EntityRendererRegistry.register(ModEntities.WINGS_BROOM, WingsBroomEntityRenderer::new);
         GeoItemRenderer.registerItemRenderer(ModItems.WINGS_BROOM, new WingsBroomItemRenderer());
 
+        GeoItemRenderer.registerItemRenderer(ModItems.CUSTOM_BROOM, new CustomBroomItemRenderer());
+
 
         GeoArmorRenderer.registerArmorRenderer(new ApprenticeWitchHatRenderer(), ModItems.APPRENTICE_WITCH_HAT, ModItems.AMETHYST_WITCH_HAT, ModItems.DIAMOND_WITCH_HAT, ModItems.GOLD_WITCH_HAT);
         GeoArmorRenderer.registerArmorRenderer(new WitchSuitRenderer(), ModItems.WITCH_SUIT);
+
+        BlockRenderLayerMap.INSTANCE.putBlock(ModBlocks.BROOMSTICK_STAND, RenderLayer.getCutout());
     }
 }
