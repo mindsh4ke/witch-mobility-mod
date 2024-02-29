@@ -8,18 +8,14 @@ import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.passive.AllayEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.LocalDifficulty;
-import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -39,13 +35,13 @@ public abstract class BroomEntity extends MobEntity implements IAnimatable {
 
     private boolean upIsPressed, downIsPressed;
 
-    private int frame = 0;
+    private int particleEffectFrame = 0;
+    private float bonusSpeed = 0f, bonusAgility = 0f;
+    private final float fallingSpeed = 1f;
 
     private PlayerEntity lastPassenger;
     protected Item sourceItem;
     protected AnimationFactory factory = GeckoLibUtil.createFactory(this);
-
-    private float bonusSpeed = 0f, bonusAgility = 0f;
 
 
     protected BroomEntity(EntityType<? extends MobEntity> entityType, World world, Item sourceItem) {
@@ -93,27 +89,36 @@ public abstract class BroomEntity extends MobEntity implements IAnimatable {
                 upIsPressed = MinecraftClient.getInstance().options.jumpKey.isPressed();
                 downIsPressed = MinecraftClient.getInstance().options.sprintKey.isPressed();
         }
-        frame++;
+        particleEffectFrame++;
 
-        if (frame >= 8) {
+        if (particleEffectFrame >= 8) {
             doEffect();
-            frame = 0;
+            particleEffectFrame = 0;
         }
+        if (!this.hasPassengers()) {
+            /*this.setMovementSpeed(fallingSpeed);
+            super.move(MovementType.SELF, new Vec3d(0, -fallingSpeed * 0.1, 0));
+            this.updateLimbs(this, false);
+            this.tryCheckBlockCollision();*/
+            this.setVelocity(new Vec3d(0, -fallingSpeed * 0.1, 0));
+            this.move(MovementType.SELF, this.getVelocity());
+        }
+
     }
 
     @Override
     public void travel(Vec3d movementInput) {
-        if (!this.isAlive()) {
+        if (!this.isAlive() || !this.canBeControlledByRider() || !this.hasPassengers()) {
             return;
         }
-        if (!(this.hasPassengers() && this.canBeControlledByRider())) {
-            return;
-        }
+
         checkBonusValues();
         LivingEntity livingEntity = (LivingEntity) this.getPrimaryPassenger();
         this.prevYaw = this.getYaw();
         this.setRotation(this.getYaw(), this.getPitch());
         this.headYaw = this.bodyYaw = this.getYaw();
+
+        assert livingEntity != null;
         float sideSpeed = livingEntity.sidewaysSpeed * getRotationSpeed() * (1+bonusAgility);
 
         setYaw(this.getYaw() - sideSpeed);
@@ -135,7 +140,7 @@ public abstract class BroomEntity extends MobEntity implements IAnimatable {
         this.airStrafingSpeed = this.getMovementSpeed() * 0.1f;
         if (this.isLogicalSideForUpdatingMovement()) {
 
-            this.setMovementSpeed((float)getSpeed()/2f + (bonusSpeed/2f));
+            this.setMovementSpeed(getSpeed()/2f + (bonusSpeed/2f));
             super.travel(new Vec3d(-forwardSpeed, verticalSpeed, 0));
 
         } else if (livingEntity instanceof PlayerEntity) {
@@ -147,6 +152,8 @@ public abstract class BroomEntity extends MobEntity implements IAnimatable {
 
     private void checkBonusValues () {
         PlayerEntity player = (PlayerEntity) this.getPrimaryPassenger();
+
+        assert player != null;
         if (player.hasStackEquipped(EquipmentSlot.HEAD)) {
             Item headItem = player.getEquippedStack(EquipmentSlot.HEAD).getItem();
             if (headItem instanceof WitchHat) {
@@ -165,6 +172,13 @@ public abstract class BroomEntity extends MobEntity implements IAnimatable {
     @Override
     public void move(MovementType movementType, Vec3d movement) {
         super.move(movementType, movement);
+        if (!this.hasPassengers()) {
+            /*this.setMovementSpeed(fallingSpeed);
+            super.move(MovementType.SELF, new Vec3d(0, -fallingSpeed * 0.1, 0));
+            this.updateLimbs(this, false);
+            this.tryCheckBlockCollision();*/
+            this.setVelocity(new Vec3d(0, -fallingSpeed * 0.1, 0));
+        }
     }
 
     public static DefaultAttributeContainer.Builder setAttributes() {
