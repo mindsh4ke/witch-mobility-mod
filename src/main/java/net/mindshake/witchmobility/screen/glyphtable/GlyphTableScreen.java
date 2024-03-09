@@ -2,6 +2,7 @@ package net.mindshake.witchmobility.screen.glyphtable;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.mindshake.witchmobility.Main;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
@@ -21,6 +22,12 @@ public class GlyphTableScreen extends HandledScreen<GlyphTableScreenHandler> {
     }
 
     @Override
+    protected void drawBackground(DrawContext context, float delta, int mouseX, int mouseY) {
+
+    }
+
+
+    /*@Override
     protected void drawBackground(MatrixStack matrices, float delta, int mouseX, int mouseY) {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
@@ -35,5 +42,5 @@ public class GlyphTableScreen extends HandledScreen<GlyphTableScreenHandler> {
         renderBackground(matrices);
         super.render(matrices, mouseX, mouseY, delta);
         drawMouseoverTooltip(matrices, mouseX, mouseY);
-    }
+    }*/
 }

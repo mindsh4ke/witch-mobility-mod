@@ -7,12 +7,13 @@ import net.mindshake.witchmobility.entity.*;
 import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 
 public class ModEntities {
     public static final EntityType<BasicBroomEntity> BASIC_BROOM = Registry.register(
-            Registry.ENTITY_TYPE,
+            Registries.ENTITY_TYPE,
             new Identifier(Main.MOD_ID, "basic_broom"),
             FabricEntityTypeBuilder.create(SpawnGroup.MISC, BasicBroomEntity::new).dimensions(EntityDimensions.fixed(0.5f,0.5f)).build()
     );
@@ -42,7 +43,7 @@ public class ModEntities {
 
     public static <T extends BroomEntity> EntityType<T> createBroom (String identifier, EntityType.EntityFactory<T> factory) {
         return Registry.register(
-                Registry.ENTITY_TYPE,
+                Registries.ENTITY_TYPE,
                 new Identifier(Main.MOD_ID, identifier),
                 FabricEntityTypeBuilder.create(SpawnGroup.MISC, factory).dimensions(EntityDimensions.fixed(1f,0.5f)).build()
         );

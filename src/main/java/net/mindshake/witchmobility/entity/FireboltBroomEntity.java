@@ -28,6 +28,6 @@ public class FireboltBroomEntity extends BroomEntity {
 
     @Override
     public void doEffect() {
-        BroomFX.spawnParticle(this, this.random, this.world, ParticleTypes.ASH);
+        BroomFX.spawnParticle(this, this.random, this.getWorld(), ParticleTypes.ASH);
     }
 }

@@ -2,6 +2,7 @@ package net.mindshake.witchmobility.item;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.mindshake.witchmobility.client.renderer.item.BasicBroomItemRenderer;
 import net.mindshake.witchmobility.screen.ItemPreviewScreen;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -11,6 +12,8 @@ import net.minecraft.block.entity.MobSpawnerBlockEntity;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.item.TooltipContext;
+import net.minecraft.client.render.item.BuiltinModelItemRenderer;
+import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
@@ -28,18 +31,23 @@ import net.minecraft.world.MobSpawnerLogic;
 import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
+import software.bernie.geckolib.animatable.GeoItem;
+import software.bernie.geckolib.animatable.client.RenderProvider;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
-public class BroomItem extends Item implements IAnimatable {
+public class BroomItem extends Item implements GeoItem {
 
     private final EntityType<?> type;
-    protected AnimationFactory factory = GeckoLibUtil.createFactory(this);
+    private final Supplier<Object> renderProvider = GeoItem.makeRenderer(this);
+    protected AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
     private boolean screenOpened = false;
 
@@ -59,16 +67,18 @@ public class BroomItem extends Item implements IAnimatable {
         BlockPos blockPos = context.getBlockPos();
         Direction direction = context.getSide();
         BlockState blockState = world.getBlockState(blockPos);
+        BlockPos blockPos2 = blockState.getCollisionShape(world, blockPos).isEmpty() ? blockPos : blockPos.offset(direction);
+
         if (blockState.isOf(Blocks.SPAWNER) && (blockEntity = world.getBlockEntity(blockPos)) instanceof MobSpawnerBlockEntity) {
             MobSpawnerLogic mobSpawnerLogic = ((MobSpawnerBlockEntity)blockEntity).getLogic();
             EntityType<?> entityType = this.getEntityType(itemStack.getNbt());
-            mobSpawnerLogic.setEntityId(entityType);
+            mobSpawnerLogic.setEntityId(entityType, context.getWorld(), context.getWorld().getRandom(), blockPos2);
             blockEntity.markDirty();
             world.updateListeners(blockPos, blockState, blockState, Block.NOTIFY_ALL);
             itemStack.decrement(1);
             return ActionResult.CONSUME;
         }
-        BlockPos blockPos2 = blockState.getCollisionShape(world, blockPos).isEmpty() ? blockPos : blockPos.offset(direction);
+
         EntityType<?> entityType2 = this.getEntityType(itemStack.getNbt());
         if (entityType2.spawnFromItemStack((ServerWorld)world, itemStack, context.getPlayer(), blockPos2, SpawnReason.SPAWN_EGG, true, !Objects.equals(blockPos, blockPos2) && direction == Direction.UP) != null) {
             itemStack.decrement(1);
@@ -86,16 +96,6 @@ public class BroomItem extends Item implements IAnimatable {
         return this.type;
     }
 
-    @Override
-    public void registerControllers(AnimationData animationData) {
-
-    }
-
-    @Override
-    public AnimationFactory getFactory() {
-        return this.factory;
-    }
-
     @Environment(EnvType.CLIENT)
     @Override
     public void appendTooltip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context) {
@@ -109,5 +109,36 @@ public class BroomItem extends Item implements IAnimatable {
                 }
             }
         }
+    }
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+
+    }
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return cache;
+    }
+
+    @Override
+    public void createRenderer(Consumer<Object> consumer) {
+        consumer.accept(new RenderProvider() {
+            private final BuiltinModelItemRenderer renderer = getRenderer();
+
+            @Override
+            public BuiltinModelItemRenderer getCustomRenderer() {
+                return this.renderer;
+            }
+        });
+    }
+
+    @Override
+    public Supplier<Object> getRenderProvider() {
+        return renderProvider;
+    }
+
+    protected BuiltinModelItemRenderer getRenderer () {
+        return new BasicBroomItemRenderer();
     }
 }

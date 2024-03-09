@@ -1,8 +1,12 @@
 package net.mindshake.witchmobility.entity;
 
+import net.mindshake.witchmobility.Main;
+import net.mindshake.witchmobility.client.ModKeybinds;
 import net.mindshake.witchmobility.item.armor.WitchHat;
 import net.mindshake.witchmobility.util.BroomFX;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.screen.option.KeybindsScreen;
+import net.minecraft.client.option.KeyBinding;
 import net.minecraft.entity.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -18,42 +22,36 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.builder.ILoopType;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.constant.DefaultAnimations;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.AnimationState;
+import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.core.object.PlayState;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.List;
 import java.util.Objects;
 
-public abstract class BroomEntity extends MobEntity implements IAnimatable {
+public abstract class BroomEntity extends MobEntity implements GeoEntity {
 
+    private boolean isDespawned = false;
     private boolean upIsPressed, downIsPressed;
-
     private int particleEffectFrame = 0;
     private float bonusSpeed = 0f, bonusAgility = 0f;
     private final float fallingSpeed = 1f;
 
     private PlayerEntity lastPassenger;
     protected Item sourceItem;
-    protected AnimationFactory factory = GeckoLibUtil.createFactory(this);
+    private AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
 
     protected BroomEntity(EntityType<? extends MobEntity> entityType, World world, Item sourceItem) {
         super(entityType, world);
         setNoGravity(true);
         this.sourceItem = sourceItem;
-    }
-
-    @Override
-    @Nullable
-    public Entity getPrimaryPassenger() {
-        return this.getFirstPassenger();
     }
 
     @Override
@@ -68,12 +66,12 @@ public abstract class BroomEntity extends MobEntity implements IAnimatable {
     }
 
     public boolean canBeControlledByRider() {
-        return this.getPrimaryPassenger() instanceof PlayerEntity;
+        return this.getFirstPassenger() instanceof PlayerEntity;
     }
 
     @Override
     public ActionResult interactAt(PlayerEntity player, Vec3d hitPos, Hand hand) {
-        if (!world.isClient) {
+        if (!this.getWorld().isClient) {
             boolean isRiding = player.startRiding(this);
             lastPassenger = isRiding?player:lastPassenger;
             return isRiding ? ActionResult.CONSUME : ActionResult.FAIL;
@@ -85,10 +83,12 @@ public abstract class BroomEntity extends MobEntity implements IAnimatable {
     @Override
     public void tick() {
         super.tick();
-        if (world.isClient) {
-                upIsPressed = MinecraftClient.getInstance().options.jumpKey.isPressed();
-                downIsPressed = MinecraftClient.getInstance().options.sprintKey.isPressed();
+
+        if (this.getWorld().isClient) {
+            upIsPressed = MinecraftClient.getInstance().options.jumpKey.isPressed();//MinecraftClient.getInstance().options.jumpKey.isPressed();
+            downIsPressed = MinecraftClient.getInstance().options.sprintKey.isPressed();
         }
+
         particleEffectFrame++;
 
         if (particleEffectFrame >= 8) {
@@ -113,7 +113,7 @@ public abstract class BroomEntity extends MobEntity implements IAnimatable {
         }
 
         checkBonusValues();
-        LivingEntity livingEntity = (LivingEntity) this.getPrimaryPassenger();
+        LivingEntity livingEntity = (LivingEntity) this.getFirstPassenger();
         this.prevYaw = this.getYaw();
         this.setRotation(this.getYaw(), this.getPitch());
         this.headYaw = this.bodyYaw = this.getYaw();
@@ -123,35 +123,30 @@ public abstract class BroomEntity extends MobEntity implements IAnimatable {
 
         setYaw(this.getYaw() - sideSpeed);
         float forwardSpeed = livingEntity.forwardSpeed;
-        float verticalSpeed = 0;
         if (forwardSpeed <= 0.0f) {
-            forwardSpeed *= 0.25f;
-        }
-
-        if (upIsPressed) {
-            verticalSpeed = 0.45f;
-        }
-
-        if (downIsPressed) {
-            verticalSpeed = -0.45f;
+            //forwardSpeed *= 0.25f;
+            forwardSpeed = 0;
         }
 
         this.velocityDirty = true;
-        this.airStrafingSpeed = this.getMovementSpeed() * 0.1f;
-        if (this.isLogicalSideForUpdatingMovement()) {
+        //this.airStrafingSpeed = this.getMovementSpeed() * 0.1f;
 
+        if (this.isLogicalSideForUpdatingMovement()) {
+            Main.LOGGER.info(String.valueOf(upIsPressed));
+            float ySpeed = MinecraftClient.getInstance().options.jumpKey.isPressed() ? 0.45f : (MinecraftClient.getInstance().options.sprintKey.isPressed() ? -0.45f : 0f);
             this.setMovementSpeed(getSpeed()/2f + (bonusSpeed/2f));
-            super.travel(new Vec3d(-forwardSpeed, verticalSpeed, 0));
+            Main.LOGGER.info(String.valueOf(ySpeed));
+            super.travel(new Vec3d(-forwardSpeed, ySpeed, 0));
 
         } else if (livingEntity instanceof PlayerEntity) {
             this.setVelocity(Vec3d.ZERO);
         }
-        this.updateLimbs(this, false);
+        this.updateLimbs(false);
         this.tryCheckBlockCollision();
     }
 
     private void checkBonusValues () {
-        PlayerEntity player = (PlayerEntity) this.getPrimaryPassenger();
+        PlayerEntity player = (PlayerEntity) this.getFirstPassenger();
 
         assert player != null;
         if (player.hasStackEquipped(EquipmentSlot.HEAD)) {
@@ -189,21 +184,21 @@ public abstract class BroomEntity extends MobEntity implements IAnimatable {
     }
 
     @Override
-    public void updatePassengerPosition(Entity passenger) {
-        updatePassengerPosition(passenger, Entity::setPosition);
-    }
-
-    private void updatePassengerPosition(Entity passenger, PositionUpdater positionUpdater) {
+    public void updatePassengerPosition(Entity passenger, PositionUpdater positionUpdater) {
         if (!this.hasPassenger(passenger)) {
             return;
         }
-        double d = this.getY() + this.getMountedHeightOffset() + passenger.getHeightOffset();
+        double d = this.getY() + this.getMountedHeightOffset();
         positionUpdater.accept(passenger, this.getX() + 0.1f, d, this.getZ());
     }
 
-    @Override
     public double getMountedHeightOffset() {
-        return 0.08f;
+        return -0.32f;
+    }
+
+    @Override
+    public Vec3d getPassengerRidingPos(Entity passenger) {
+        return super.getPassengerRidingPos(passenger);
     }
 
     @Override
@@ -242,8 +237,8 @@ public abstract class BroomEntity extends MobEntity implements IAnimatable {
     }
 
     @Override
-    public boolean canBeRiddenInWater() {
-        return true;
+    public boolean shouldDismountUnderwater() {
+        return false;
     }
 
     @Override
@@ -258,50 +253,63 @@ public abstract class BroomEntity extends MobEntity implements IAnimatable {
 
     @Override
     public boolean damage(DamageSource source, float amount) {
+        if (isDespawned) {
+            return false;
+        }
+
         if (source.getSource() instanceof PlayerEntity player) {
             for (int i = 0; i < 6; i++) {
-                BroomFX.spawnParticle(this, this.random, this.world, ParticleTypes.CAMPFIRE_COSY_SMOKE);
+                BroomFX.spawnParticle(this, this.random, this.getWorld(), ParticleTypes.CAMPFIRE_COSY_SMOKE);
             }
             despawn(player);
             return true;
         } else {
-            super.damage(source, amount);
+
         }
         return false;
     }
 
     private void despawn (PlayerEntity player) {
+        isDespawned = true;
         this.discard();
+        if (player.isCreative())
+            return;
+
         if (!player.getInventory().insertStack(new ItemStack(sourceItem))) {
             dropItem(sourceItem.asItem());
         }
     }
 
-    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
-        if (getFirstPassenger() == null) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.basic_broom.fly_idle", ILoopType.EDefaultLoopTypes.LOOP));
-        } else if (upIsPressed) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.basic_broom.up", ILoopType.EDefaultLoopTypes.LOOP));
-        }  else if (downIsPressed) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.basic_broom.down", ILoopType.EDefaultLoopTypes.LOOP));
-        } else if (((LivingEntity) Objects.requireNonNull(this.getPrimaryPassenger())).forwardSpeed > 0.1f) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.basic_broom.forward", ILoopType.EDefaultLoopTypes.LOOP));
-        } else {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.basic_broom.static", ILoopType.EDefaultLoopTypes.LOOP));
-        }
-        return PlayState.CONTINUE;
-    }
-
     @Override
-    public void registerControllers(AnimationData animationData) {
-        AnimationController anim = new AnimationController(this, "controller",
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+        controllers.add(new AnimationController<>(this, "controller", 20, this::predicate));
+        /*AnimationController anim = new AnimationController(this, "controller",
                 20, this::predicate);
-        animationData.addAnimationController(anim);
+        animationData.addAnimationController(anim);*/
+    }
+
+    private PlayState predicate(AnimationState<BroomEntity> state) {
+        if (getFirstPassenger() == null) {
+            return state.setAndContinue(RawAnimation.begin().thenLoop("animation.basic_broom.fly_idle"));
+            //event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.basic_broom.fly_idle", ILoopType.EDefaultLoopTypes.LOOP));
+        } else if (upIsPressed) {
+            return state.setAndContinue(RawAnimation.begin().thenLoop("animation.basic_broom.up"));
+            //event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.basic_broom.up", ILoopType.EDefaultLoopTypes.LOOP));
+        }  else if (downIsPressed) {
+            return state.setAndContinue(RawAnimation.begin().thenLoop("animation.basic_broom.down"));
+            //event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.basic_broom.down", ILoopType.EDefaultLoopTypes.LOOP));
+        } else if (((LivingEntity) Objects.requireNonNull(this.getFirstPassenger())).forwardSpeed > 0.1f) {
+            return state.setAndContinue(RawAnimation.begin().thenLoop("animation.basic_broom.forward"));
+            //event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.basic_broom.forward", ILoopType.EDefaultLoopTypes.LOOP));
+        } else {
+            return state.setAndContinue(RawAnimation.begin().thenLoop("animation.basic_broom.static"));
+            //event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.basic_broom.static", ILoopType.EDefaultLoopTypes.LOOP));
+        }
     }
 
     @Override
-    public AnimationFactory getFactory() {
-        return this.factory;
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return cache;
     }
 
     public abstract float getSpeed ();

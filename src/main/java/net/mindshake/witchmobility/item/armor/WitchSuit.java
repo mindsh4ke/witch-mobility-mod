@@ -1,21 +1,34 @@
 package net.mindshake.witchmobility.item.armor;
 
+import net.mindshake.witchmobility.client.renderer.armor.ApprenticeWitchHatRenderer;
+import net.mindshake.witchmobility.client.renderer.armor.WitchSuitRenderer;
+import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ArmorMaterial;
+import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib.animatable.GeoItem;
+import software.bernie.geckolib.animatable.client.RenderProvider;
+import software.bernie.geckolib.core.animatable.GeoAnimatable;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.renderer.GeoArmorRenderer;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class WitchSuit extends ArmorItem implements IAnimatable {
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
-    private final AnimationFactory factory = new AnimationFactory(this);
+public class WitchSuit extends ArmorItem implements GeoItem {
+
+    private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+    private final Supplier<Object> renderProvider = GeoItem.makeRenderer(this);
 
     public WitchSuit(ArmorMaterial material, EquipmentSlot slot, Settings settings) {
-        super(material, slot, settings);
+        super(material, Type.CHESTPLATE, settings);
     }
 
     @Nullable
@@ -23,6 +36,39 @@ public class WitchSuit extends ArmorItem implements IAnimatable {
     public SoundEvent getEquipSound() {
         return SoundEvents.ITEM_ARMOR_EQUIP_LEATHER;
     }
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+
+    }
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return cache;
+    }
+
+    @Override
+    public void createRenderer(Consumer<Object> consumer) {
+        consumer.accept(new RenderProvider() {
+            private GeoArmorRenderer<?> renderer;
+
+            @Override
+            public BipedEntityModel<LivingEntity> getHumanoidArmorModel(LivingEntity livingEntity, ItemStack itemStack, EquipmentSlot equipmentSlot, BipedEntityModel<LivingEntity> original) {
+                if (this.renderer == null) {
+                    this.renderer = new WitchSuitRenderer();
+                }
+                this.renderer.prepForRender(livingEntity, itemStack, equipmentSlot, original);
+
+                return this.renderer;
+            }
+        });
+    }
+
+    @Override
+    public Supplier<Object> getRenderProvider() {
+        return this.renderProvider;
+    }
+
 
     /*int i = 0;
     @Override
@@ -39,13 +85,4 @@ public class WitchSuit extends ArmorItem implements IAnimatable {
         super.usageTick(world, user, stack, remainingUseTicks);
     }*/
 
-    @Override
-    public void registerControllers(AnimationData animationData) {
-
-    }
-
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
-    }
 }

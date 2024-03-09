@@ -5,12 +5,9 @@ import net.mindshake.witchmobility.client.EntityResources;
 import net.mindshake.witchmobility.entity.BasicBroomEntity;
 import net.mindshake.witchmobility.item.BasicBroomItem;
 import net.minecraft.util.Identifier;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.processor.IBone;
-import software.bernie.geckolib3.model.AnimatedGeoModel;
-import software.bernie.geckolib3.model.provider.data.EntityModelData;
+import software.bernie.geckolib.model.GeoModel;
 
-public class BasicBroomEntityModel extends AnimatedGeoModel<BasicBroomEntity> {
+public class BasicBroomEntityModel extends GeoModel<BasicBroomEntity> {
     @Override
     public Identifier getModelResource(BasicBroomEntity object) {
         return EntityResources.BASIC_BROOM_MODEL;

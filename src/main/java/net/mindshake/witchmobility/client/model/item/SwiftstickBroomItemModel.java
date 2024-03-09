@@ -4,9 +4,9 @@ import net.mindshake.witchmobility.client.EntityResources;
 import net.mindshake.witchmobility.item.BlueBottleBroomItem;
 import net.mindshake.witchmobility.item.SwiftstickBroomItem;
 import net.minecraft.util.Identifier;
-import software.bernie.geckolib3.model.AnimatedGeoModel;
+import software.bernie.geckolib.model.GeoModel;
 
-public class SwiftstickBroomItemModel extends AnimatedGeoModel<SwiftstickBroomItem> {
+public class SwiftstickBroomItemModel extends GeoModel<SwiftstickBroomItem> {
     @Override
     public Identifier getModelResource(SwiftstickBroomItem object) {
         return EntityResources.SWIFTSTICK_BROOM_MODEL;

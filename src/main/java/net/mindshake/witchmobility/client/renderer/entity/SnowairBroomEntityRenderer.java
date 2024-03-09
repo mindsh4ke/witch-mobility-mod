@@ -7,7 +7,7 @@ import net.mindshake.witchmobility.entity.GoldenwoodBroomEntity;
 import net.mindshake.witchmobility.entity.SnowairBroomEntity;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.util.Identifier;
-import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
+import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
 public class SnowairBroomEntityRenderer extends GeoEntityRenderer<SnowairBroomEntity> {
     public SnowairBroomEntityRenderer(EntityRendererFactory.Context ctx) {

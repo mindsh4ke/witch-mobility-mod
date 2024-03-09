@@ -1,7 +1,11 @@
 package net.mindshake.witchmobility.item.armor;
 
+import net.mindshake.witchmobility.client.renderer.armor.ApprenticeWitchHatRenderer;
 import net.minecraft.client.item.TooltipContext;
+import net.minecraft.client.render.entity.model.BipedEntityModel;
+import net.minecraft.client.render.item.BuiltinModelItemRenderer;
 import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.ItemStack;
@@ -10,16 +14,21 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
+import software.bernie.geckolib.animatable.GeoItem;
+import software.bernie.geckolib.animatable.client.RenderProvider;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.renderer.GeoArmorRenderer;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
-public class WitchHat extends ArmorItem implements IAnimatable {
+public class WitchHat extends ArmorItem implements GeoItem {
 
-    private AnimationFactory factory = GeckoLibUtil.createFactory(this);
+    private AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+    private final Supplier<Object> renderProvider = GeoItem.makeRenderer(this);
     private final int variant;
     private final float broomSpeedBonus, broomAgilityBonus;
 
@@ -31,7 +40,7 @@ public class WitchHat extends ArmorItem implements IAnimatable {
     };
 
     public WitchHat(int variant, float broomSpeedBonus, float broomAgilityBonus, ArmorMaterial material, EquipmentSlot slot, Settings settings) {
-        super(material, slot, settings);
+        super(material, Type.HELMET, settings);
         this.variant = variant;
         this.broomSpeedBonus = broomSpeedBonus;
         this.broomAgilityBonus = broomAgilityBonus;
@@ -41,16 +50,6 @@ public class WitchHat extends ArmorItem implements IAnimatable {
     @Override
     public SoundEvent getEquipSound() {
         return SoundEvents.ITEM_ARMOR_EQUIP_LEATHER;
-    }
-
-    @Override
-    public void registerControllers(AnimationData animationData) {
-
-    }
-
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
     }
 
     @Override
@@ -71,5 +70,37 @@ public class WitchHat extends ArmorItem implements IAnimatable {
 
     public float getBroomAgilityBonus() {
         return broomAgilityBonus;
+    }
+
+    @Override
+    public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+
+    }
+
+    @Override
+    public AnimatableInstanceCache getAnimatableInstanceCache() {
+        return cache;
+    }
+
+    @Override
+    public void createRenderer(Consumer<Object> consumer) {
+        consumer.accept(new RenderProvider() {
+            private GeoArmorRenderer<?> renderer;
+
+            @Override
+            public BipedEntityModel<LivingEntity> getHumanoidArmorModel(LivingEntity livingEntity, ItemStack itemStack, EquipmentSlot equipmentSlot, BipedEntityModel<LivingEntity> original) {
+                if (this.renderer == null) {
+                    this.renderer = new ApprenticeWitchHatRenderer();
+                }
+                this.renderer.prepForRender(livingEntity, itemStack, equipmentSlot, original);
+
+                return this.renderer;
+            }
+        });
+    }
+
+    @Override
+    public Supplier<Object> getRenderProvider() {
+        return this.renderProvider;
     }
 }

@@ -4,7 +4,7 @@ import net.mindshake.witchmobility.client.model.item.BasicBroomItemModel;
 import net.mindshake.witchmobility.client.model.item.BlueBottleBroomItemModel;
 import net.mindshake.witchmobility.item.BasicBroomItem;
 import net.mindshake.witchmobility.item.BlueBottleBroomItem;
-import software.bernie.geckolib3.renderers.geo.GeoItemRenderer;
+import software.bernie.geckolib.renderer.GeoItemRenderer;
 
 public class BlueBottleBroomItemRenderer extends GeoItemRenderer<BlueBottleBroomItem> {
     public BlueBottleBroomItemRenderer() {

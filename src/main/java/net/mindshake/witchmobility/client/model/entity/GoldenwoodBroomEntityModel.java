@@ -4,9 +4,9 @@ import net.mindshake.witchmobility.client.EntityResources;
 import net.mindshake.witchmobility.entity.FireboltBroomEntity;
 import net.mindshake.witchmobility.entity.GoldenwoodBroomEntity;
 import net.minecraft.util.Identifier;
-import software.bernie.geckolib3.model.AnimatedGeoModel;
+import software.bernie.geckolib.model.GeoModel;
 
-public class GoldenwoodBroomEntityModel extends AnimatedGeoModel<GoldenwoodBroomEntity> {
+public class GoldenwoodBroomEntityModel extends GeoModel<GoldenwoodBroomEntity> {
     @Override
     public Identifier getModelResource(GoldenwoodBroomEntity object) {
         return EntityResources.GOLDENWOOD_BROOM_MODEL;

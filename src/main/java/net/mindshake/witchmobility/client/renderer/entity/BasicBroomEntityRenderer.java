@@ -5,7 +5,7 @@ import net.mindshake.witchmobility.entity.BasicBroomEntity;
 import net.mindshake.witchmobility.client.model.entity.BasicBroomEntityModel;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.util.Identifier;
-import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
+import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
 public class BasicBroomEntityRenderer extends GeoEntityRenderer<BasicBroomEntity> {
     public BasicBroomEntityRenderer(EntityRendererFactory.Context ctx) {

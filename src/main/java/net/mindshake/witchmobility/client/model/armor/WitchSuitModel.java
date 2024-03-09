@@ -4,9 +4,9 @@ import net.mindshake.witchmobility.client.EntityResources;
 import net.mindshake.witchmobility.item.armor.WitchHat;
 import net.mindshake.witchmobility.item.armor.WitchSuit;
 import net.minecraft.util.Identifier;
-import software.bernie.geckolib3.model.AnimatedGeoModel;
+import software.bernie.geckolib.model.GeoModel;
 
-public class WitchSuitModel extends AnimatedGeoModel<WitchSuit> {
+public class WitchSuitModel extends GeoModel<WitchSuit> {
     @Override
     public Identifier getModelResource(WitchSuit object) {
         return EntityResources.WITCH_SUIT_MODEL;

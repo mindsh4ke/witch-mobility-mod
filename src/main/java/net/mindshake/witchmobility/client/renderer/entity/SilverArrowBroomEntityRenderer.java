@@ -8,7 +8,7 @@ import net.mindshake.witchmobility.entity.BasicBroomEntity;
 import net.mindshake.witchmobility.entity.SilverArrowBroomEntity;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.util.Identifier;
-import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
+import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
 public class SilverArrowBroomEntityRenderer extends GeoEntityRenderer<SilverArrowBroomEntity> {
     public SilverArrowBroomEntityRenderer(EntityRendererFactory.Context ctx) {

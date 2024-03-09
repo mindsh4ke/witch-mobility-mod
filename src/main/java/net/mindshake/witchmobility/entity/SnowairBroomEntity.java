@@ -27,6 +27,6 @@ public class SnowairBroomEntity extends BroomEntity {
 
     @Override
     public void doEffect() {
-        BroomFX.spawnParticle(this, this.random, this.world, ParticleTypes.SNOWFLAKE);
+        BroomFX.spawnParticle(this, this.random, this.getWorld(), ParticleTypes.SNOWFLAKE);
     }
 }

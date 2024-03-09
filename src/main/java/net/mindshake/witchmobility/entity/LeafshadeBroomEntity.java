@@ -27,6 +27,6 @@ public class LeafshadeBroomEntity extends BroomEntity {
 
     @Override
     public void doEffect() {
-        BroomFX.spawnParticle(this, this.random, this.world, ParticleTypes.FALLING_SPORE_BLOSSOM);
+        BroomFX.spawnParticle(this, this.random, this.getWorld(), ParticleTypes.FALLING_SPORE_BLOSSOM);
     }
 }

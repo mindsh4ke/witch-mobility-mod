@@ -8,10 +8,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.world.World;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 
 import java.util.Objects;
 
@@ -34,7 +30,7 @@ public class WingsBroomEntity extends BroomEntity {
 
     @Override
     public void doEffect() {
-        BroomFX.spawnParticle(this, this.random, this.world, ParticleTypes.END_ROD);
+        BroomFX.spawnParticle(this, this.random, this.getWorld(), ParticleTypes.END_ROD);
     }
 
     /*@Override

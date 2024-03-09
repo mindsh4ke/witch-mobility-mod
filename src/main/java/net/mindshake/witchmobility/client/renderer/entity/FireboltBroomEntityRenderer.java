@@ -8,7 +8,7 @@ import net.mindshake.witchmobility.entity.BasicBroomEntity;
 import net.mindshake.witchmobility.entity.FireboltBroomEntity;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.util.Identifier;
-import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
+import software.bernie.geckolib.renderer.GeoEntityRenderer;
 
 public class FireboltBroomEntityRenderer extends GeoEntityRenderer<FireboltBroomEntity> {
     public FireboltBroomEntityRenderer(EntityRendererFactory.Context ctx) {

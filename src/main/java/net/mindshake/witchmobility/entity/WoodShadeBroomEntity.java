@@ -27,6 +27,6 @@ public class WoodShadeBroomEntity extends BroomEntity {
 
     @Override
     public void doEffect() {
-        BroomFX.spawnParticle(this, this.random, this.world, ParticleTypes.ENCHANT);
+        BroomFX.spawnParticle(this, this.random, this.getWorld(), ParticleTypes.ENCHANT);
     }
 }
