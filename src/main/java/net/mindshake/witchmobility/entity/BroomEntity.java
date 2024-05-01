@@ -122,7 +122,7 @@ public abstract class BroomEntity extends MobEntity implements GeoEntity {
         float sideSpeed = livingEntity.sidewaysSpeed * getRotationSpeed() * (1+bonusAgility);
 
         setYaw(this.getYaw() - sideSpeed);
-        float forwardSpeed = livingEntity.forwardSpeed;
+        float forwardSpeed = livingEntity.forwardSpeed * 4;
         if (forwardSpeed <= 0.0f) {
             //forwardSpeed *= 0.25f;
             forwardSpeed = 0;
@@ -132,11 +132,11 @@ public abstract class BroomEntity extends MobEntity implements GeoEntity {
         //this.airStrafingSpeed = this.getMovementSpeed() * 0.1f;
 
         if (this.isLogicalSideForUpdatingMovement()) {
-            Main.LOGGER.info(String.valueOf(upIsPressed));
             float ySpeed = MinecraftClient.getInstance().options.jumpKey.isPressed() ? 0.45f : (MinecraftClient.getInstance().options.sprintKey.isPressed() ? -0.45f : 0f);
-            this.setMovementSpeed(getSpeed()/2f + (bonusSpeed/2f));
-            Main.LOGGER.info(String.valueOf(ySpeed));
+            this.setMovementSpeed(getSpeed() / 2 + (bonusSpeed * 2));
             super.travel(new Vec3d(-forwardSpeed, ySpeed, 0));
+            this.updateVelocity(0.02F, new Vec3d(-forwardSpeed, ySpeed, 0));
+            this.move(MovementType.SELF, this.getVelocity());
 
         } else if (livingEntity instanceof PlayerEntity) {
             this.setVelocity(Vec3d.ZERO);
@@ -194,11 +194,6 @@ public abstract class BroomEntity extends MobEntity implements GeoEntity {
 
     public double getMountedHeightOffset() {
         return -0.32f;
-    }
-
-    @Override
-    public Vec3d getPassengerRidingPos(Entity passenger) {
-        return super.getPassengerRidingPos(passenger);
     }
 
     @Override
