@@ -31,7 +31,7 @@ public class ItemPreviewScreen extends Screen {
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         //context.fillGradient(0, 0, this.width, this.height, -1072689136, -804253680);
-        context.fillGradient(0, 0, this.width, this.height, 0x2a00384D, 0x0000004D);
+        context.fillGradient(0, 0, this.width, this.height, 0x2a003880, 0x00000080);
         super.render(context, mouseX, mouseY, delta);
         int centerX = width / 2;
         int centerY = height / 2;
@@ -115,7 +115,8 @@ public class ItemPreviewScreen extends Screen {
         entity.prevHeadYaw = entity.getYaw();
         Vector3f vector3f = new Vector3f(0.0F, entity.getHeight() / 2.0F + f, 0.0F);
 
-        InventoryScreen.drawEntity(context, g, h, size, vector3f, quaternionf, quaternionf2, entity);
+        InventoryScreen.drawEntity(context, (int)g, (int)h, size, mouseX, mouseY, entity);
+        //InventoryScreen.drawEntity(context, g, h, size, vector3f, quaternionf, quaternionf2, entity);
 
         entity.bodyYaw = k;
         entity.setYaw(l);
