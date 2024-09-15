@@ -1,6 +1,7 @@
 package net.mindshake.witchmobility.item;
 
-import net.mindshake.witchmobility.client.renderer.item.BasicBroomItemRenderer;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.mindshake.witchmobility.client.renderer.item.SnowairBroomItemRenderer;
 import net.minecraft.client.render.item.BuiltinModelItemRenderer;
 import net.minecraft.entity.EntityType;
@@ -10,7 +11,7 @@ public class SnowairBroomItem extends BroomItem{
     public SnowairBroomItem(EntityType<? extends MobEntity> type, Settings settings) {
         super(type, settings);
     }
-
+    @Environment(EnvType.CLIENT)
     @Override
     protected BuiltinModelItemRenderer getRenderer() {
         return new SnowairBroomItemRenderer();
