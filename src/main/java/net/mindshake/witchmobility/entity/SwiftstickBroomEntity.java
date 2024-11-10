@@ -1,24 +1,24 @@
 package net.mindshake.witchmobility.entity;
 
 import net.mindshake.witchmobility.registry.ModItems;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.level.Level;
 
 public class SwiftstickBroomEntity extends BroomEntity {
 
 
-    public SwiftstickBroomEntity(EntityType<? extends MobEntity> entityType, World world) {
-        super(entityType, world, ModItems.BLUE_BOTTLE_BROOM);
+    public SwiftstickBroomEntity(EntityType<? extends Mob> entityType, Level world) {
+        super(entityType, world, ModItems.SWIFTSTICK_BROOM.get());
     }
 
     @Override
     public float getSpeed() {
-        return 2f;
+        return 1.7f;
     }
 
     @Override
     public float getRotationSpeed() {
-        return 2.5f;
+        return 3f;
     }
 }

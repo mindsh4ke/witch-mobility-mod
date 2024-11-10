@@ -1,22 +1,20 @@
 package net.mindshake.witchmobility.client.renderer.entity;
 
-import net.mindshake.witchmobility.Main;
 import net.mindshake.witchmobility.client.EntityResources;
-import net.mindshake.witchmobility.client.model.entity.BasicBroomEntityModel;
 import net.mindshake.witchmobility.client.model.entity.FireboltBroomEntityModel;
-import net.mindshake.witchmobility.entity.BasicBroomEntity;
 import net.mindshake.witchmobility.entity.FireboltBroomEntity;
-import net.minecraft.client.render.entity.EntityRendererFactory;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 
 public class FireboltBroomEntityRenderer extends GeoEntityRenderer<FireboltBroomEntity> {
-    public FireboltBroomEntityRenderer(EntityRendererFactory.Context ctx) {
+    public FireboltBroomEntityRenderer(EntityRendererProvider.Context ctx) {
         super(ctx, new FireboltBroomEntityModel());
     }
 
     @Override
-    public Identifier getTextureLocation(FireboltBroomEntity instance) {
+    public @NotNull ResourceLocation getTextureLocation(@NotNull FireboltBroomEntity instance) {
         return EntityResources.FIREBOLT_BROOM_TEXTURE;
     }
 }

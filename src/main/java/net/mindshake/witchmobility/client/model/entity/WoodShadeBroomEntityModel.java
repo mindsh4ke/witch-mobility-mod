@@ -1,24 +1,23 @@
 package net.mindshake.witchmobility.client.model.entity;
 
 import net.mindshake.witchmobility.client.EntityResources;
-import net.mindshake.witchmobility.entity.FireboltBroomEntity;
 import net.mindshake.witchmobility.entity.WoodShadeBroomEntity;
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
 
 public class WoodShadeBroomEntityModel extends AnimatedGeoModel<WoodShadeBroomEntity> {
     @Override
-    public Identifier getModelLocation(WoodShadeBroomEntity object) {
+    public ResourceLocation getModelResource(WoodShadeBroomEntity object) {
         return EntityResources.WOODSHADE_BROOM_MODEL;
     }
 
     @Override
-    public Identifier getTextureLocation(WoodShadeBroomEntity object) {
+    public ResourceLocation getTextureResource(WoodShadeBroomEntity object) {
         return EntityResources.WOODSHADE_BROOM_TEXTURE;
     }
 
     @Override
-    public Identifier getAnimationFileLocation(WoodShadeBroomEntity animatable) {
+    public ResourceLocation getAnimationResource(WoodShadeBroomEntity animatable) {
         return EntityResources.BASIC_ANIMATIONS;
     }
 }

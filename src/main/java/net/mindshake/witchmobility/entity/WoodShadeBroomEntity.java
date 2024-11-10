@@ -1,24 +1,24 @@
 package net.mindshake.witchmobility.entity;
 
 import net.mindshake.witchmobility.registry.ModItems;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.level.Level;
 
 public class WoodShadeBroomEntity extends BroomEntity {
 
 
-    public WoodShadeBroomEntity(EntityType<? extends MobEntity> entityType, World world) {
-        super(entityType, world, ModItems.WOODSHADE_BROOM);
+    public WoodShadeBroomEntity(EntityType<? extends Mob> entityType, Level world) {
+        super(entityType, world, ModItems.WOODSHADE_BROOM.get());
     }
 
     @Override
     public float getSpeed() {
-        return 1.25f;
+        return 1.5f;
     }
 
     @Override
     public float getRotationSpeed() {
-        return 3f;
+        return 3.5f;
     }
 }
